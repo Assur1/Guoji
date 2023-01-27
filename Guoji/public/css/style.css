@@ -1,0 +1,27 @@
+.board
+{
+    height: 100%;
+    width: 100%;
+    background-color:black;
+    text-align: center;
+    margin: 0;
+    padding-bottom: 3px;
+    font-size: 0;
+}
+
+.box
+{
+    height: 89px;
+    width: 89px;
+    display:inline-block;
+}
+
+.yellow
+{
+    background: rgba(34, 77, 236, 0.5);
+}
+
+.red
+{
+    background:rgba(204, 0, 0, 0.5);
+}

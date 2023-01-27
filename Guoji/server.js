@@ -34,6 +34,8 @@ io.on('connection', (socket)=>{
     //socket.join(id de la room)
     io.to(socket.id).emit('join room', //id de la room
     )
+
+    // si nombre de joueur == 2 alors start game
 })
 
 function createRoom()
