@@ -2,7 +2,7 @@
 {
     height: 100%;
     width: 100%;
-    background-color:black;
+    background-color:rgb(68, 68, 68);
     text-align: center;
     margin: 0;
     padding-bottom: 3px;
@@ -18,10 +18,17 @@
 
 .yellow
 {
-    background: rgba(34, 77, 236, 0.5);
+    background: rgb(255, 255, 255);
 }
 
 .red
 {
-    background:rgba(204, 0, 0, 0.5);
+    background:rgb(0, 0, 0);
+}
+
+.pawn
+{
+    display: block;
+    width: 70px;
+    margin: auto;
 }
