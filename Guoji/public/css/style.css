@@ -13,7 +13,9 @@
 {
     height: 89px;
     width: 89px;
-    display:inline-block;
+    display:inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .yellow
@@ -28,7 +30,7 @@
 
 .pawn
 {
-    display: block;
-    width: 70px;
-    margin: auto;
+    position: absolute;
+    max-width: 70px; 
+    max-height: 70px;
 }
