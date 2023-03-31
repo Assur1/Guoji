@@ -1,3 +1,12 @@
+/*
+1 : pion
+2 : rook
+3 : chevalier
+4 : bishop
+5 : king 
+6 : queen
+*/
+
 export default class Pawn {
 
     constructor(id, i, j, color) {
@@ -5,7 +14,6 @@ export default class Pawn {
         this.j = j;
         this.id = id;
         this.color = color;
-        this.moved = false;
         this.nextMouv = [];
     }
 
@@ -68,12 +76,18 @@ export default class Pawn {
         switch(this.id)
         {
             case 1 :
-                this.nextMouv[0] = [this.i-1,this.j] 
-                if(!this.moved)
-                {
-                    this.moved = true;
-                    this.nextMouv[1] = [this.i-2,this.j]
-                }     
+                if(this.color == "white"){
+                    this.nextMouv[0] = [this.i-1,this.j];
+                    if(this.i == 6){
+                        this.nextMouv[1] = [this.i-2,this.j];
+                    }
+                }
+                else{
+                    this.nextMouv[0] = [this.i+1,this.j];
+                    if(this.i == 1){
+                        this.nextMouv[1] = [this.i+2,this.j];
+                    }
+                }
                 break;
             case 2 :
                 for(var x = 0; x <= 7; x++)
@@ -104,6 +118,7 @@ export default class Pawn {
                     this.nextMouv.push([this.i+indice,  this.j-2]);
                     this.nextMouv.push([this.i+indice,  this.j+2]);
                 }
+                break;
             
             case 4 :
                 this.nextMouv.push([this.i+1, this.j+1]);
@@ -129,6 +144,7 @@ export default class Pawn {
                 {
                     this.nextMouv.push([this.nextMouv[x+21-1][0] + 1, this.nextMouv[x+21-1][1] - 1]);
                 }
+                break;
 
                 
             case 5 :

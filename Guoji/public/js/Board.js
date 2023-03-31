@@ -19,7 +19,7 @@ export default class Board {
         this.plat[0][6] = new Pawn(3,0,6, "black");
         this.plat[0][7] = new Pawn(2,0,7, "black");
         for(var i=0; i<this.lenght; i++){
-            this.plat[1][i]= new Pawn(1,0,i, "black");
+            this.plat[1][i]= new Pawn(1,1,i, "black");
         }
 
         this.plat[7][0] = new Pawn(2,7,0, "white");
@@ -95,10 +95,25 @@ export default class Board {
                 const id =  ev.dataTransfer.getData('text/plain');
                 const draggable = document.getElementById(id);
 
+
                 var oldi = parseInt(id.at(-1));
                 var oldj = parseInt(id.at(-2)); 
 
                 var movs = this.getPawn(oldi,oldj).getpreviousmovArray();
+
+                var newi = parseInt(ev.target.id.at(-1));
+                var newj = parseInt(ev.target.id.at(-2));
+
+                var element = document.getElementById(newj.toString() + newi.toString());
+
+                if(document.getElementById(newj.toString() + newi.toString()).classList.contains("lightingBox"))
+                {
+                    if (element.hasChildNodes()) {
+                        element.removeChild(element.firstChild);
+                    }
+                    this.getPawn(oldi,oldj).setIndices(newj, newi);
+                    element.appendChild(draggable);
+                }
 
                 for(var i = 0; i<movs.length; i++)
                 {
@@ -107,12 +122,6 @@ export default class Board {
                         document.getElementById(movs[i][0].toString() + movs[i][1].toString()).classList.remove("lightingBox");
                     }                 
                 } 
-                var newi = parseInt(ev.target.id.at(-1));
-                var newj = parseInt(ev.target.id.at(-2));
-                
-                this.getPawn(oldi,oldj).setIndices(newj, newi);
-
-                ev.target.appendChild(draggable);
                 draggable.classList.remove('hide');
             });
         }
