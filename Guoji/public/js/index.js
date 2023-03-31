@@ -1,17 +1,31 @@
 import Board from './Board.js';
 
-//Creer le type joueur (room id obligatoire) 
+const socket = io.connect("http://localhost:16800");
+socket.emit("joined");
 
-const socket = io();
+let currentPlayer = {
+    id : socket.id,
+    color : "",
+};
+socket.emit("join", currentPlayer.id);
 
-//on submit => creer objet joueur
-// socket = socket.id
-// socket.emit du joueur
+socket.on("join", (color) =>{
+    currentPlayer.color = color;
+});
 
-var board = new Board(8);
-board.init();
-board.display();
-board.DragAndDrop();
+socket.on("disconnected", ()=>{
+    window.location.reload();
+});
+
+
+socket.on("start", ()=>{
+    var board = new Board(8);
+    board.init();
+    board.display(currentPlayer.color);
+    board.DragAndDrop();
+});
+
+
 
 
 

@@ -35,15 +35,22 @@ export default class Board {
         }
     }
 
-    display(){
-        for(var i=0; i<this.lenght; i++){
-            for(var j=0; j<this.lenght; j++){
-                if(this.plat[i][j] != null)
-                {
-                    this.plat[i][j].display(i, j);
+    display(color){
+        if(color == 0)
+        {
+            for(var i=0; i<this.lenght; i++){
+                for(var j=0; j<this.lenght; j++){
+                    if(this.plat[i][j] != null)
+                    {
+                        this.plat[i][j].display(i, j);
+                    }
                 }
             }
+        }else
+        {
+            
         }
+        
     }
 
     DragAndDrop()

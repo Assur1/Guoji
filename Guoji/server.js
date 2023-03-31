@@ -13,7 +13,6 @@ const port = 16800;
 const io = require("socket.io")(http);
 server.use(express.static('public'));
 
-
 server.get('/', (req, res) => {
     res.sendFile(path.join(__dirname,"client/index.html"));
 });
@@ -26,28 +25,35 @@ http.listen(port, ()=>{
     console.log(`Server is running on http://localhost:${port}/`);
 })
 
-
-let rooms = [];
+let users = [];
 
 io.on('connection', (socket)=>{ 
     console.log(`[Connexion] ${socket.id}`)
+    
+    socket.on("join", () =>{
+        if(users.length <= 2)
+        {
+            users.push(socket.id);
+            console.log(users.length)
+            if(users.length == 1)
+            {
+                socket.emit("join", 0);
+            }
+            else
+            {
+                socket.emit("join", 1);
+            }
+        }
 
-    // Creer une route qui écoute l'event de création de player
-        // Si pas de roomid => Creer room
-        // si rejoin salon avec lien ou code : Regarde avec un predicat si le code entrer === à une rooms*
-    //socket.join(id de la room)
-    io.to(socket.id).emit('join room', //id de la room
-    )
+        if(users.length == 2)
+        {
+            io.emit("start");
+        }
+    });
 
-    // si nombre de joueur == 2 alors start game
-})
-
-function createRoom()
-{
-
-}
-
-function genRoomId()
-{
-    return null;
-}
+    socket.on('disconnect', ()=> {
+        users = [];
+        io.emit('disconnected')
+        console.log(`[Disconnect] ${socket.id}`);
+    });
+});
