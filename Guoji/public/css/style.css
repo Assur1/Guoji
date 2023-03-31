@@ -34,3 +34,13 @@
     max-width: 70px; 
     max-height: 70px;
 }
+
+.hide
+{
+    display: none;
+}
+
+.lightingBox
+{
+    background-color:rgb(231, 164, 47);
+}

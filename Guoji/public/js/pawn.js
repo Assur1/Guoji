@@ -5,48 +5,57 @@ export default class Pawn {
         this.j = j;
         this.id = id;
         this.color = color;
+        this.moved = false;
+        this.nextMouv = [];
+    }
+
+
+    setIndices(i, j)
+    {
+        this.i = i;
+        this.j = j;
     }
 
     display(i, j) {
         if(this.color == "white")
         {
             if (this.id == 1) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=white'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn" src="img/chess/w_pawn.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=white'+ i.toString() + j.toString() +'  class="pawn" src="img/chess/w_pawn.png"/>';
             }
             if (this.id == 2) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=white'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn"src="img/chess/w_rook.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=white'+ i.toString() + j.toString() +'  class="pawn"src="img/chess/w_rook.png"/>';
             }
             if (this.id == 3) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=white'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn" src="img/chess/w_knight.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=white'+ i.toString() + j.toString() +'  class="pawn" src="img/chess/w_knight.png"/>';
             }
             if (this.id == 4) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=white'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn" src="img/chess/w_bishop.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=white'+ i.toString() + j.toString() +'  class="pawn" src="img/chess/w_bishop.png"/>';
             }
             if (this.id == 5) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=white'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn" src="img/chess/w_king.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=white'+ i.toString() + j.toString() +'  class="pawn" src="img/chess/w_king.png"/>';
             }
             if (this.id == 6) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=white'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn" src="img/chess/w_queen.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=white'+ i.toString() + j.toString() +'  class="pawn" src="img/chess/w_queen.png"/>';
             }
         }else
         {
             if (this.id == 1) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=black'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn" src="img/chess/b_pawn.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=black'+ i.toString() + j.toString() +'  class="pawn" src="img/chess/b_pawn.png"/>';
             }
             if (this.id == 2) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=black'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn"src="img/chess/b_rook.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=black'+ i.toString() + j.toString() +'  class="pawn"src="img/chess/b_rook.png"/>';
             }
             if (this.id == 3) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=black'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn" src="img/chess/b_knight.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=black'+ i.toString() + j.toString() +'  class="pawn" src="img/chess/b_knight.png"/>';
             }
             if (this.id == 4) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=black'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn" src="img/chess/b_bishop.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=black'+ i.toString() + j.toString() +'  class="pawn" src="img/chess/b_bishop.png"/>';
             }
             if (this.id == 5) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=black'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn" src="img/chess/b_king.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=black'+ i.toString() + j.toString() +'  class="pawn" src="img/chess/b_king.png"/>';
             }
             if (this.id == 6) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = '<img draggable="true" id=black'+ i.toString() + j.toString() +' ondragstart="drag(event)" class="pawn" src="img/chess/b_queen.png"/>';
+                document.getElementById(i.toString() + j.toString()).innerHTML = '<img  draggable="true" id=black'+ i.toString() + j.toString() +'  class="pawn" src="img/chess/b_queen.png"/>';
             }
         }
         
@@ -54,19 +63,136 @@ export default class Pawn {
 
     getmoveArray()
     {
-        nextMove = new Array();
-        nextMove[0] = [this.i+2,this.j+1]
-        nextMove[1] = [this.i+2,this.j-1]
+        this.nextMouv = new Array();
 
-        nextMove[2] = [this.i+1,this.j-2]
-        nextMove[3] = [this.i-1,this.j-2]
-        
-        nextMove[4] = [this.i-2,this.j+1]
-        nextMove[5] = [this.i-2,this.j-1]
+        switch(this.id)
+        {
+            case 1 :
+                this.nextMouv[0] = [this.i-1,this.j] 
+                if(!this.moved)
+                {
+                    this.moved = true;
+                    this.nextMouv[1] = [this.i-2,this.j]
+                }     
+                break;
+            case 2 :
+                for(var x = 0; x <= 7; x++)
+                {
+                    this.nextMouv.push([this.i - x, this.j]);
+                }
 
-        nextMove[6] = [this.i-1,this.j-2]
-        nextMove[7] = [this.i+1,this.j-2]
+                for(var x = 0; x <=  7; x++)
+                {
+                    this.nextMouv.push([this.i + x, this.j]);
+                }
 
-        return nextMove;
+                for(var x = 0; x <=  7; x++)
+                {
+                    this.nextMouv.push([this.i, this.j + x]);
+                }
+
+                for(var x = 0; x <=  7; x++)
+                {
+                    this.nextMouv.push([this.i, this.j - x]);
+                }
+                break;
+            case 3 :
+                for(var indice = -1; indice < 2; indice+=2)
+                {
+                    this.nextMouv.push([this.i-2,       this.j+indice]);
+                    this.nextMouv.push([this.i+2,       this.j+indice]);
+                    this.nextMouv.push([this.i+indice,  this.j-2]);
+                    this.nextMouv.push([this.i+indice,  this.j+2]);
+                }
+            
+            case 4 :
+                this.nextMouv.push([this.i+1, this.j+1]);
+                for(var x = 1; x <=  6; x++)
+                {
+                    this.nextMouv.push([this.nextMouv[x-1][0] + 1, this.nextMouv[x-1][1] + 1]);
+                }
+
+                this.nextMouv.push([this.i-1, this.j-1]);
+                for(var x = 1; x <=  6; x++)
+                {
+                    this.nextMouv.push([this.nextMouv[x+7-1][0] - 1, this.nextMouv[x+7-1][1] - 1]);
+                }
+
+                this.nextMouv.push([this.i-1, this.j+1]);
+                for(var x = 1; x <=  6; x++)
+                {
+                    this.nextMouv.push([this.nextMouv[x+14-1][0] - 1, this.nextMouv[x+14-1][1] + 1]);
+                }
+
+                this.nextMouv.push([this.i+1, this.j-1]);
+                for(var x = 1; x <=  6; x++)
+                {
+                    this.nextMouv.push([this.nextMouv[x+21-1][0] + 1, this.nextMouv[x+21-1][1] - 1]);
+                }
+
+                
+            case 5 :
+                this.nextMouv.push([this.i+1, this.j])
+                this.nextMouv.push([this.i, this.j+1])
+                this.nextMouv.push([this.i-1, this.j])
+                this.nextMouv.push([this.i, this.j-1])
+                this.nextMouv.push([this.i+1, this.j+1])
+                this.nextMouv.push([this.i-1, this.j-1])
+                this.nextMouv.push([this.i-1, this.j+1])
+                this.nextMouv.push([this.i+1, this.j-1])
+                break;
+            case 6 :
+                this.nextMouv.push([this.i+1, this.j+1]);
+                for(var x = 1; x <=  6; x++)
+                {
+                    this.nextMouv.push([this.nextMouv[x-1][0] + 1, this.nextMouv[x-1][1] + 1]);
+                }
+
+                this.nextMouv.push([this.i-1, this.j-1]);
+                for(var x = 1; x <=  6; x++)
+                {
+                    this.nextMouv.push([this.nextMouv[x+7-1][0] - 1, this.nextMouv[x+7-1][1] - 1]);
+                }
+
+                this.nextMouv.push([this.i-1, this.j+1]);
+                for(var x = 1; x <=  6; x++)
+                {
+                    this.nextMouv.push([this.nextMouv[x+14-1][0] - 1, this.nextMouv[x+14-1][1] + 1]);
+                }
+
+                this.nextMouv.push([this.i+1, this.j-1]);
+                for(var x = 1; x <=  6; x++)
+                {
+                    this.nextMouv.push([this.nextMouv[x+21-1][0] + 1, this.nextMouv[x+21-1][1] - 1]);
+                }
+
+                for(var x = 0; x <= 7; x++)
+                {
+                    this.nextMouv.push([this.i - x, this.j]);
+                }
+
+                for(var x = 0; x <=  7; x++)
+                {
+                    this.nextMouv.push([this.i + x, this.j]);
+                }
+
+                for(var x = 0; x <=  7; x++)
+                {
+                    this.nextMouv.push([this.i, this.j + x]);
+                }
+
+                for(var x = 0; x <=  7; x++)
+                {
+                    this.nextMouv.push([this.i, this.j - x]);
+                }
+                break;
+        }
+
+        return this.nextMouv;
+    }
+
+    getpreviousmovArray()
+    {
+        return this.nextMouv;
     }
 }    
