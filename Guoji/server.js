@@ -34,7 +34,6 @@ io.on('connection', (socket)=>{
         if(users.length <= 2)
         {
             users.push(socket.id);
-            console.log(users.length)
             if(users.length == 1)
             {
                 socket.emit("join", 0);
@@ -55,5 +54,19 @@ io.on('connection', (socket)=>{
         users = [];
         io.emit('disconnected')
         console.log(`[Disconnect] ${socket.id}`);
+    });
+
+
+    socket.on('movment', (tab)=>
+    {
+        if(users[0] == socket.id)
+        {
+            //blanc
+            io.to(users[1]).emit("movment", tab);
+        }else
+        {
+            //noir
+            io.to(users[0]).emit("movment", tab);
+        }
     });
 });

@@ -1,14 +1,14 @@
 import Pawn from './Pawn.js';
 export default class Board {
 
-    constructor(len) {
+    constructor(len, s) {
+        this.socket = s;
         this.lenght = len;
         this.plat = new Array();
         for(var i=0; i<this.lenght; i++){
             this.plat[i] = new Array();
         }
     }
-
     init() {
         this.plat[0][0] = new Pawn(2,0,0, "black");
         this.plat[0][1] = new Pawn(3,0,1, "black");
@@ -43,20 +43,14 @@ export default class Board {
                     this.plat[i][j].display(i, j);
                 }
             }
-        }
-        
-        if(color == 1)
-        {
-            
-        }
-        
+        }      
     }
 
     DragAndDrop()
     {
         var pawns = document.getElementsByClassName("pawn");
         var boxes = document.getElementsByClassName("box");
-
+        var pos = [];
         for( var i = 0; i< pawns.length; i++)
         {
             pawns[i].addEventListener('dragstart', (ev) => {
@@ -121,7 +115,11 @@ export default class Board {
                         document.getElementById(movs[i][0].toString() + movs[i][1].toString()).classList.remove("lightingBox");
                     }                 
                 } 
+
+                pos = [[oldi, oldj], [newi, newj]];
                 draggable.classList.remove('hide');
+                console.log(pos);
+                this.socket.emit("movment", pos);
             });
         }
     }
@@ -129,6 +127,11 @@ export default class Board {
 
     setMovement(oldi,oldj, newi, newj)
     {
+        console.log(oldi);
+        console.log(oldj);
+        console.log(newi);
+        console.log(newj);
+
         this.plat[newi][newj] = this.plat[oldi][oldj];
         this.plat[oldi][oldj] = null;
     }
