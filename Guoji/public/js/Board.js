@@ -124,6 +124,8 @@ export default class Board {
 
                     this.setMovement(oldi,oldj, newi, newj)
                     element.appendChild(draggable);
+                    pos = [[oldi, oldj], [newi, newj]];
+                    this.socket.emit("movment", pos);
                 }
 
                 for(var i = 0; i<movs.length; i++)
@@ -132,11 +134,8 @@ export default class Board {
                     {
                         document.getElementById(movs[i][0].toString() + movs[i][1].toString()).classList.remove("lightingBox");
                     }                 
-                } 
-
-                pos = [[oldi, oldj], [newi, newj]];
-                draggable.classList.remove('hide');
-                this.socket.emit("movment", pos);
+                }               
+                draggable.classList.remove('hide');               
             });
         }
     }
