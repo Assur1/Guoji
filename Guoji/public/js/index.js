@@ -26,8 +26,13 @@ socket.on("start", ()=>{
 });
 
 socket.on("movment", (tab)=>{
+    console.log("Movement");
     board.setMovement(tab[0][0], tab[0][1], tab[1][0], tab[1][1]);
+    console.log("Clear");
+    board.clearDisplay();
+    console.log("Display");
     board.display(currentPlayer.color);
+    console.log("Drag and drop");
     board.DragAndDrop(socket);
 });
 

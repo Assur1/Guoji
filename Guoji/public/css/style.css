@@ -1,6 +1,5 @@
-body
+.board
 {
-<<<<<<< Updated upstream
     height: 100%;
     width: 100%;
     background-color:rgb(68, 68, 68);
@@ -8,60 +7,24 @@ body
     margin: 0;
     padding-bottom: 3px;
     font-size: 0;
-=======
-    display: grid;
-    place-items: center;
-    overflow-x: hidden;
-    background: rgba(50, 45, 45, 0.811);
-}
-
-ul
-{
-    display: grid;
-    grid-template-columns: 1fr;
-}
-
-.line
-{
-    display: flex;
-}
-
-li
-{
-    list-style: none;
-    display: grid;
-    place-items: center;
-    font-size: 0px;
->>>>>>> Stashed changes
 }
 
 .box
 {
-<<<<<<< Updated upstream
     height: 89px;
     width: 89px;
     display:inline-flex;
     justify-content: center;
     align-items: center;
-=======
-    margin: .5px;
-    width: 80px;
-    height: 80px;
->>>>>>> Stashed changes
 }
 
-.white
+.yellow
 {
-<<<<<<< Updated upstream
     background: rgb(255, 255, 255);
-=======
-    background: #fff;
->>>>>>> Stashed changes
 }
 
-.black
+.red
 {
-<<<<<<< Updated upstream
     background:rgb(0, 0, 0);
 }
 
@@ -81,16 +44,3 @@ li
 {
     background-color:rgb(231, 164, 47);
 }
-=======
-    background: #000;
-}
-
-
-@media (max-width:650px) {
-    .box
-    {
-        width: 11vw;
-        height: 11vw;
-    }
-}
->>>>>>> Stashed changes

@@ -72,135 +72,238 @@ export default class Pawn {
     getmoveArray()
     {
         this.nextMouv = new Array();
+        var currentMouv, compteur=1;
 
         switch(this.id)
         {
             case 1 :
-                if(this.color == "white"){
+
+                currentMouv = document.getElementById((this.i-1).toString() + this.j.toString());
+                if(!currentMouv.hasChildNodes())
+                {
                     this.nextMouv[0] = [this.i-1,this.j];
                     if(this.i == 6){
                         this.nextMouv[1] = [this.i-2,this.j];
                     }
                 }
-                else{
-                    this.nextMouv[0] = [this.i+1,this.j];
-                    if(this.i == 1){
-                        this.nextMouv[1] = [this.i+2,this.j];
+
+                for(var x = -1; x < 2; x+=2)
+                {
+                    if(this.j+x >= 0 && this.j+x <= 7){
+                        currentMouv = document.getElementById((this.i-1).toString() + (this.j+x).toString());
+                        if(currentMouv.hasChildNodes()){
+                            if(currentMouv.firstChild.id.substr(0, 1) == "b"){
+                                this.nextMouv.push([this.i-1,this.j+x]);
+                            }
+                        }
                     }
                 }
                 break;
+
             case 2 :
-                for(var x = 0; x <= 7; x++)
+                currentMouv = document.getElementById((this.i-compteur).toString() + this.j.toString());
+                while(this.i-compteur >= 0 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.i - x, this.j]);
+                    this.nextMouv.push([this.i - compteur, this.j]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i-compteur).toString() + this.j.toString());
                 }
+                if(this.i-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j]);}
 
-                for(var x = 0; x <=  7; x++)
+                compteur = 1;
+                currentMouv = document.getElementById((this.i+compteur).toString() + this.j.toString());
+                while(this.i+compteur <= 7 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.i + x, this.j]);
+                    this.nextMouv.push([this.i + compteur, this.j]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i+compteur).toString() + this.j.toString());
                 }
+                if(this.i+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j]);}
 
-                for(var x = 0; x <=  7; x++)
+                compteur = 1;
+                currentMouv = document.getElementById(this.i.toString() + (this.j-compteur).toString());
+                while(this.j-compteur >= 0 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.i, this.j + x]);
+                    this.nextMouv.push([this.i, this.j-compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById(this.i.toString() + (this.j-compteur).toString());
                 }
+                if(this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i, this.j-compteur]);}
 
-                for(var x = 0; x <=  7; x++)
+                compteur = 1;
+                currentMouv = document.getElementById(this.i.toString() + (this.j+compteur).toString());
+                while(this.j+compteur <= 7 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.i, this.j - x]);
+                    this.nextMouv.push([this.i, this.j+compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById(this.i.toString() + (this.j+compteur).toString());
                 }
+                if(this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i, this.j+   compteur]);}
                 break;
+
             case 3 :
                 for(var indice = -1; indice < 2; indice+=2)
                 {
-                    this.nextMouv.push([this.i-2,       this.j+indice]);
-                    this.nextMouv.push([this.i+2,       this.j+indice]);
-                    this.nextMouv.push([this.i+indice,  this.j-2]);
-                    this.nextMouv.push([this.i+indice,  this.j+2]);
+                    currentMouv = document.getElementById((this.i-2).toString() + (this.j+indice).toString());
+                    if(this.i-2 >= 0 && this.j+indice >= 0 && this.j+indice <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
+                        this.nextMouv.push([this.i-2, this.j+indice]);
+                    }
+                    currentMouv = document.getElementById((this.i+2).toString() + (this.j+indice).toString());
+                    if(this.i+2 <= 7 && this.j+indice >= 0 && this.j+indice <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
+                        this.nextMouv.push([this.i+2, this.j+indice]);
+                    }
+                    currentMouv = document.getElementById((this.i+indice).toString() + (this.j+2).toString());
+                    if(this.i+indice >= 0 && this.i+indice <= 7 && this.j+2 <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
+                        this.nextMouv.push([this.i+indice, this.j+2]);
+                    }
+                    currentMouv = document.getElementById((this.i+indice).toString() + (this.j-2).toString());
+                    if(this.i+indice >= 0 && this.i+indice <= 7 && this.j-2 >= 0 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
+                        this.nextMouv.push([this.i+indice, this.j-2]);
+                    }
                 }
                 break;
             
             case 4 :
-                this.nextMouv.push([this.i+1, this.j+1]);
-                for(var x = 1; x <=  6; x++)
+                currentMouv = document.getElementById((this.i-compteur).toString() + (this.j-compteur).toString());
+                while(this.i-compteur >= 0 && this.j-compteur >= 0 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.nextMouv[x-1][0] + 1, this.nextMouv[x-1][1] + 1]);
+                    this.nextMouv.push([this.i - compteur, this.j - compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i-compteur).toString() + (this.j-compteur).toString());
                 }
+                if(this.i-compteur >= 0 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j-compteur]);}
 
-                this.nextMouv.push([this.i-1, this.j-1]);
-                for(var x = 1; x <=  6; x++)
+                compteur = 1;
+                currentMouv = document.getElementById((this.i+compteur).toString() + (this.j-compteur).toString());
+                while(this.i+compteur <= 7 && this.j-compteur >= 0 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.nextMouv[x+7-1][0] - 1, this.nextMouv[x+7-1][1] - 1]);
+                    this.nextMouv.push([this.i + compteur, this.j - compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i+compteur).toString() + (this.j-compteur).toString());
                 }
+                if(this.i+compteur <= 7 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j-compteur]);}
 
-                this.nextMouv.push([this.i-1, this.j+1]);
-                for(var x = 1; x <=  6; x++)
+                compteur = 1;
+                currentMouv = document.getElementById((this.i-compteur).toString() + (this.j+compteur).toString());
+                while(this.i-compteur >= 0 && this.j+compteur <= 7 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.nextMouv[x+14-1][0] - 1, this.nextMouv[x+14-1][1] + 1]);
+                    this.nextMouv.push([this.i - compteur, this.j + compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i-compteur).toString() + (this.j+compteur).toString());
                 }
+                if(this.i-compteur >= 0 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j+compteur]);}
 
-                this.nextMouv.push([this.i+1, this.j-1]);
-                for(var x = 1; x <=  6; x++)
+                compteur = 1;
+                currentMouv = document.getElementById((this.i+compteur).toString() + (this.j+compteur).toString());
+                while(this.i+compteur <= 7 && this.j+compteur <= 7 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.nextMouv[x+21-1][0] + 1, this.nextMouv[x+21-1][1] - 1]);
+                    this.nextMouv.push([this.i + compteur, this.j + compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i+compteur).toString() + (this.j+compteur).toString());
                 }
+                if(this.i+compteur <= 7 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j+compteur]);}
                 break;
 
                 
             case 5 :
-                this.nextMouv.push([this.i+1, this.j])
-                this.nextMouv.push([this.i, this.j+1])
-                this.nextMouv.push([this.i-1, this.j])
-                this.nextMouv.push([this.i, this.j-1])
-                this.nextMouv.push([this.i+1, this.j+1])
-                this.nextMouv.push([this.i-1, this.j-1])
-                this.nextMouv.push([this.i-1, this.j+1])
-                this.nextMouv.push([this.i+1, this.j-1])
+                currentMouv = document.getElementById((this.i-1).toString() + (this.j).toString());
+                if(this.i-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i-1, this.j]);}
+                currentMouv = document.getElementById((this.i+1).toString() + (this.j   ).toString());
+                if(this.i+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i+1, this.j]);}
+                currentMouv = document.getElementById((this.i).toString() + (this.j-1).toString());
+                if(this.j-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i, this.j-1]);}
+                currentMouv = document.getElementById((this.i).toString() + (this.j+1).toString());
+                if(this.j+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i, this.j+1]);}
+                currentMouv = document.getElementById((this.i-1).toString() + (this.j-1).toString());
+                if(this.i-1 >= 0 && this.j-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i-1, this.j-1]);}
+                currentMouv = document.getElementById((this.i-1).toString() + (this.j+1).toString());
+                if(this.i-1 >= 0 && this.j+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i-1, this.j+1]);}
+                currentMouv = document.getElementById((this.i+1).toString() + (this.j-1).toString());
+                if(this.i+1 <= 7 && this.j-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i+1, this.j-1]);}
+                currentMouv = document.getElementById((this.i+1).toString() + (this.j+1).toString());
+                if(this.i+1 <= 7 && this.j+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i+1, this.j+1]);}
+        
                 break;
+
             case 6 :
-                this.nextMouv.push([this.i+1, this.j+1]);
-                for(var x = 1; x <=  6; x++)
+                currentMouv = document.getElementById((this.i-compteur).toString() + this.j.toString());
+                while(this.i-compteur >= 0 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.nextMouv[x-1][0] + 1, this.nextMouv[x-1][1] + 1]);
+                    this.nextMouv.push([this.i - compteur, this.j]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i-compteur).toString() + this.j.toString());
                 }
+                if(this.i-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j]);}
 
-                this.nextMouv.push([this.i-1, this.j-1]);
-                for(var x = 1; x <=  6; x++)
+                compteur = 1;
+                currentMouv = document.getElementById((this.i+compteur).toString() + this.j.toString());
+                while(this.i+compteur <= 7 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.nextMouv[x+7-1][0] - 1, this.nextMouv[x+7-1][1] - 1]);
+                    this.nextMouv.push([this.i + compteur, this.j]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i+compteur).toString() + this.j.toString());
                 }
+                if(this.i+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j]);}
 
-                this.nextMouv.push([this.i-1, this.j+1]);
-                for(var x = 1; x <=  6; x++)
+                compteur = 1;
+                currentMouv = document.getElementById(this.i.toString() + (this.j-compteur).toString());
+                while(this.j-compteur >= 0 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.nextMouv[x+14-1][0] - 1, this.nextMouv[x+14-1][1] + 1]);
+                    this.nextMouv.push([this.i, this.j-compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById(this.i.toString() + (this.j-compteur).toString());
                 }
+                if(this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i, this.j-compteur]);}
 
-                this.nextMouv.push([this.i+1, this.j-1]);
-                for(var x = 1; x <=  6; x++)
+                compteur = 1;
+                currentMouv = document.getElementById(this.i.toString() + (this.j+compteur).toString());
+                while(this.j+compteur <= 7 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.nextMouv[x+21-1][0] + 1, this.nextMouv[x+21-1][1] - 1]);
+                    this.nextMouv.push([this.i, this.j+compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById(this.i.toString() + (this.j+compteur).toString());
                 }
+                if(this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i, this.j+   compteur]);}
+          
+                compteur = 1;
+                currentMouv = document.getElementById((this.i-compteur).toString() + (this.j-compteur).toString());
+                while(this.i-compteur >= 0 && this.j-compteur >= 0 && !currentMouv.hasChildNodes())
+                {
+                    this.nextMouv.push([this.i - compteur, this.j - compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i-compteur).toString() + (this.j-compteur).toString());
+                }
+                if(this.i-compteur >= 0 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j-compteur]);}
 
-                for(var x = 0; x <= 7; x++)
+                compteur = 1;
+                currentMouv = document.getElementById((this.i+compteur).toString() + (this.j-compteur).toString());
+                while(this.i+compteur <= 7 && this.j-compteur >= 0 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.i - x, this.j]);
+                    this.nextMouv.push([this.i + compteur, this.j - compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i+compteur).toString() + (this.j-compteur).toString());
                 }
+                if(this.i+compteur <= 7 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j-compteur]);}
 
-                for(var x = 0; x <=  7; x++)
+                compteur = 1;
+                currentMouv = document.getElementById((this.i-compteur).toString() + (this.j+compteur).toString());
+                while(this.i-compteur >= 0 && this.j+compteur <= 7 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.i + x, this.j]);
+                    this.nextMouv.push([this.i - compteur, this.j + compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i-compteur).toString() + (this.j+compteur).toString());
                 }
+                if(this.i-compteur >= 0 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j+compteur]);}
 
-                for(var x = 0; x <=  7; x++)
+                compteur = 1;
+                currentMouv = document.getElementById((this.i+compteur).toString() + (this.j+compteur).toString());
+                while(this.i+compteur <= 7 && this.j+compteur <= 7 && !currentMouv.hasChildNodes())
                 {
-                    this.nextMouv.push([this.i, this.j + x]);
+                    this.nextMouv.push([this.i + compteur, this.j + compteur]);
+                    compteur += 1;
+                    currentMouv = document.getElementById((this.i+compteur).toString() + (this.j+compteur).toString());
                 }
-
-                for(var x = 0; x <=  7; x++)
-                {
-                    this.nextMouv.push([this.i, this.j - x]);
-                }
+                if(this.i+compteur <= 7 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j+compteur]);}
                 break;
         }
 
