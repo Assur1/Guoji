@@ -35,16 +35,6 @@ export default class Board {
         }
     }
 
-    clearDisplay()
-    {
-        const myNode = document.getElementsByClassName("box");
-        
-        for(var i =0; i< myNode.length; i++)
-        {
-            myNode[i].innerHTML = '';
-        }
-    }
-
     display(color){
         for(var i=0; i<this.lenght; i++){
             for(var j=0; j<this.lenght; j++){
@@ -128,6 +118,7 @@ export default class Board {
 
                 pos = [[oldi, oldj], [newi, newj]];
                 draggable.classList.remove('hide');
+                console.log(pos);
                 this.socket.emit("movment", pos);
             });
         }
@@ -141,8 +132,8 @@ export default class Board {
         console.log(newi);
         console.log(newj);
 
-        this.plat[newj][newi] = this.plat[oldj][oldi];
-        this.plat[oldj][oldi] = null;
+        this.plat[newi][newj] = this.plat[oldi][oldj];
+        this.plat[oldi][oldj] = null;
     }
 
     getPawn(i,j)
