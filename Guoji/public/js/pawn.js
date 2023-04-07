@@ -72,95 +72,51 @@ export default class Pawn {
     getmoveArray()
     {
         this.nextMouv = new Array();
-        var currentMouv, compteur=1;
 
         switch(this.id)
         {
             case 1 :
-
-                currentMouv = document.getElementById((this.i-1).toString() + this.j.toString());
-                if(!currentMouv.hasChildNodes())
-                {
+                if(this.color == "white"){
                     this.nextMouv[0] = [this.i-1,this.j];
                     if(this.i == 6){
                         this.nextMouv[1] = [this.i-2,this.j];
                     }
                 }
-
-                for(var x = -1; x < 2; x+=2)
-                {
-                    if(this.j+x >= 0 && this.j+x <= 7){
-                        currentMouv = document.getElementById((this.i-1).toString() + (this.j+x).toString());
-                        if(currentMouv.hasChildNodes()){
-                            if(currentMouv.firstChild.id.substr(0, 1) == "b"){
-                                this.nextMouv.push([this.i-1,this.j+x]);
-                            }
-                        }
+                else{
+                    this.nextMouv[0] = [this.i+1,this.j];
+                    if(this.i == 1){
+                        this.nextMouv[1] = [this.i+2,this.j];
                     }
                 }
                 break;
-
             case 2 :
-                currentMouv = document.getElementById((this.i-compteur).toString() + this.j.toString());
-                while(this.i-compteur >= 0 && !currentMouv.hasChildNodes())
+                for(var x = 0; x <= 7; x++)
                 {
-                    this.nextMouv.push([this.i - compteur, this.j]);
-                    compteur += 1;
-                    currentMouv = document.getElementById((this.i-compteur).toString() + this.j.toString());
+                    this.nextMouv.push([this.i - x, this.j]);
                 }
-                if(this.i-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j]);}
 
-                compteur = 1;
-                currentMouv = document.getElementById((this.i+compteur).toString() + this.j.toString());
-                while(this.i+compteur <= 7 && !currentMouv.hasChildNodes())
+                for(var x = 0; x <=  7; x++)
                 {
-                    this.nextMouv.push([this.i + compteur, this.j]);
-                    compteur += 1;
-                    currentMouv = document.getElementById((this.i+compteur).toString() + this.j.toString());
+                    this.nextMouv.push([this.i + x, this.j]);
                 }
-                if(this.i+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j]);}
 
-                compteur = 1;
-                currentMouv = document.getElementById(this.i.toString() + (this.j-compteur).toString());
-                while(this.j-compteur >= 0 && !currentMouv.hasChildNodes())
+                for(var x = 0; x <=  7; x++)
                 {
-                    this.nextMouv.push([this.i, this.j-compteur]);
-                    compteur += 1;
-                    currentMouv = document.getElementById(this.i.toString() + (this.j-compteur).toString());
+                    this.nextMouv.push([this.i, this.j + x]);
                 }
-                if(this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i, this.j-compteur]);}
 
-                compteur = 1;
-                currentMouv = document.getElementById(this.i.toString() + (this.j+compteur).toString());
-                while(this.j+compteur <= 7 && !currentMouv.hasChildNodes())
+                for(var x = 0; x <=  7; x++)
                 {
-                    this.nextMouv.push([this.i, this.j+compteur]);
-                    compteur += 1;
-                    currentMouv = document.getElementById(this.i.toString() + (this.j+compteur).toString());
+                    this.nextMouv.push([this.i, this.j - x]);
                 }
-                if(this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i, this.j+   compteur]);}
-                
                 break;
-
             case 3 :
                 for(var indice = -1; indice < 2; indice+=2)
                 {
-                    currentMouv = document.getElementById((this.i-2).toString() + (this.j+indice).toString());
-                    if(this.i-2 >= 0 && this.j+indice >= 0 && this.j+indice <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
-                        this.nextMouv.push([this.i-2, this.j+indice]);
-                    }
-                    currentMouv = document.getElementById((this.i+2).toString() + (this.j+indice).toString());
-                    if(this.i+2 <= 7 && this.j+indice >= 0 && this.j+indice <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
-                        this.nextMouv.push([this.i+2, this.j+indice]);
-                    }
-                    currentMouv = document.getElementById((this.i+indice).toString() + (this.j+2).toString());
-                    if(this.i+indice >= 0 && this.i+indice <= 7 && this.j+2 <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
-                        this.nextMouv.push([this.i+indice, this.j+2]);
-                    }
-                    currentMouv = document.getElementById((this.i+indice).toString() + (this.j-2).toString());
-                    if(this.i+indice >= 0 && this.i+indice <= 7 && this.j-2 >= 0 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
-                        this.nextMouv.push([this.i+indice, this.j-2]);
-                    }
+                    this.nextMouv.push([this.i-2,       this.j+indice]);
+                    this.nextMouv.push([this.i+2,       this.j+indice]);
+                    this.nextMouv.push([this.i+indice,  this.j-2]);
+                    this.nextMouv.push([this.i+indice,  this.j+2]);
                 }
                 break;
             
