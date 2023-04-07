@@ -31,8 +31,8 @@ socket.on("movment", (tab)=>{
     console.log("Clear");
     board.clearDisplay();
     console.log("Display");
-    board.display(currentPlayer.color);
-    console.log("Drag and drop");
+    board.display();
+    console.log("DragAndDrop");
     board.DragAndDrop();
 });
 

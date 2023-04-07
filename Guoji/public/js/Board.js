@@ -73,7 +73,6 @@ export default class Board {
                 var j = parseInt(ev.target.id.at(-2));
                 
                 var movs = this.getPawn(i,j).getmoveArray();
-
                 for(var i = 0; i<movs.length; i++)
                 {
                     if((movs[i][0] <= 7) && (movs[i][0] >= 0) && (movs[i][1] <= 7) && (movs[i][1] >= 0))
@@ -98,6 +97,7 @@ export default class Board {
                 const id =  ev.dataTransfer.getData('text/plain');
                 const draggable = document.getElementById(id);
 
+                
 
                 var oldi = parseInt(id.at(-1));
                 var oldj = parseInt(id.at(-2)); 
@@ -114,7 +114,12 @@ export default class Board {
                     if (element.hasChildNodes()) {
                         element.removeChild(element.firstChild);
                     }
+                    draggable.id =  this.getPawn(oldi,oldj).getcolor()+newj+newi;
                     this.getPawn(oldi,oldj).setIndices(newj, newi);
+
+                    
+
+                    this.setMovement(oldi,oldj, newi, newj)
                     element.appendChild(draggable);
                 }
 

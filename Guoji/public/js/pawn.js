@@ -349,4 +349,9 @@ export default class Pawn {
     {
         return this.nextMouv;
     }
+
+    getcolor()
+    {
+        return this.color;
+    }
 }    
