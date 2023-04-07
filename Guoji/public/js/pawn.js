@@ -15,6 +15,15 @@ export default class Pawn {
         this.id = id;
         this.color = color;
         this.nextMouv = [];
+        switch(color)
+        {
+            case "white":
+                this.enemie = "b";
+                break;
+            case "black":
+                this.enemie = "w";
+                break;
+        }
     }
 
 
@@ -78,25 +87,51 @@ export default class Pawn {
         {
             case 1 :
 
-                currentMouv = document.getElementById((this.i-1).toString() + this.j.toString());
-                if(!currentMouv.hasChildNodes())
+                switch(this.color)
                 {
-                    this.nextMouv[0] = [this.i-1,this.j];
-                    if(this.i == 6){
-                        this.nextMouv[1] = [this.i-2,this.j];
-                    }
-                }
-
-                for(var x = -1; x < 2; x+=2)
-                {
-                    if(this.j+x >= 0 && this.j+x <= 7){
-                        currentMouv = document.getElementById((this.i-1).toString() + (this.j+x).toString());
-                        if(currentMouv.hasChildNodes()){
-                            if(currentMouv.firstChild.id.substr(0, 1) == "b"){
-                                this.nextMouv.push([this.i-1,this.j+x]);
+                    case "white":
+                        currentMouv = document.getElementById((this.i-1).toString() + this.j.toString());
+                        if(!currentMouv.hasChildNodes())
+                        {
+                            this.nextMouv[0] = [this.i-1,this.j];
+                            if(this.i == 6){
+                                this.nextMouv[1] = [this.i-2,this.j];
                             }
                         }
-                    }
+                        for(var x = -1; x < 2; x+=2)
+                        {
+                            if(this.j+x >= 0 && this.j+x <= 7){
+                                currentMouv = document.getElementById((this.i-1).toString() + (this.j+x).toString());
+                                if(currentMouv.hasChildNodes()){
+                                    if(currentMouv.firstChild.id.substr(0, 1) == this.enemie){
+                                        this.nextMouv.push([this.i-1,this.j+x]);
+                                    }
+                                }
+                            }
+                        }
+                        break;
+
+                    case "black":
+                        currentMouv = document.getElementById((this.i+1).toString() + this.j.toString());
+                        if(!currentMouv.hasChildNodes())
+                        {
+                            this.nextMouv[0] = [this.i+1,this.j];
+                            if(this.i == 1){
+                                this.nextMouv[1] = [this.i+2,this.j];
+                            }
+                        }
+                        for(var x = -1; x < 2; x+=2)
+                        {
+                            if(this.j+x >= 0 && this.j+x <= 7){
+                                currentMouv = document.getElementById((this.i+1).toString() + (this.j+x).toString());
+                                if(currentMouv.hasChildNodes()){
+                                    if(currentMouv.firstChild.id.substr(0, 1) == this.enemie){
+                                        this.nextMouv.push([this.i+1,this.j+x]);
+                                    }
+                                }
+                            }
+                        }
+                        break;
                 }
                 break;
 
@@ -108,7 +143,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i-compteur).toString() + this.j.toString());
                 }
-                if(this.i-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j]);}
+                if(this.i-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i-compteur, this.j]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById((this.i+compteur).toString() + this.j.toString());
@@ -118,7 +153,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i+compteur).toString() + this.j.toString());
                 }
-                if(this.i+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j]);}
+                if(this.i+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i+compteur, this.j]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById(this.i.toString() + (this.j-compteur).toString());
@@ -128,7 +163,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById(this.i.toString() + (this.j-compteur).toString());
                 }
-                if(this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i, this.j-compteur]);}
+                if(this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i, this.j-compteur]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById(this.i.toString() + (this.j+compteur).toString());
@@ -138,26 +173,26 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById(this.i.toString() + (this.j+compteur).toString());
                 }
-                if(this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i, this.j+   compteur]);}
+                if(this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i, this.j+   compteur]);}
                 break;
 
             case 3 :
                 for(var indice = -1; indice < 2; indice+=2)
                 {
                     currentMouv = document.getElementById((this.i-2).toString() + (this.j+indice).toString());
-                    if(this.i-2 >= 0 && this.j+indice >= 0 && this.j+indice <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
+                    if(this.i-2 >= 0 && this.j+indice >= 0 && this.j+indice <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == this.enemie)){
                         this.nextMouv.push([this.i-2, this.j+indice]);
                     }
                     currentMouv = document.getElementById((this.i+2).toString() + (this.j+indice).toString());
-                    if(this.i+2 <= 7 && this.j+indice >= 0 && this.j+indice <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
+                    if(this.i+2 <= 7 && this.j+indice >= 0 && this.j+indice <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == this.enemie)){
                         this.nextMouv.push([this.i+2, this.j+indice]);
                     }
                     currentMouv = document.getElementById((this.i+indice).toString() + (this.j+2).toString());
-                    if(this.i+indice >= 0 && this.i+indice <= 7 && this.j+2 <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
+                    if(this.i+indice >= 0 && this.i+indice <= 7 && this.j+2 <= 7 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == this.enemie)){
                         this.nextMouv.push([this.i+indice, this.j+2]);
                     }
                     currentMouv = document.getElementById((this.i+indice).toString() + (this.j-2).toString());
-                    if(this.i+indice >= 0 && this.i+indice <= 7 && this.j-2 >= 0 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == "b")){
+                    if(this.i+indice >= 0 && this.i+indice <= 7 && this.j-2 >= 0 && (!currentMouv.hasChildNodes() || currentMouv.firstChild.id.substr(0, 1) == this.enemie)){
                         this.nextMouv.push([this.i+indice, this.j-2]);
                     }
                 }
@@ -171,7 +206,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i-compteur).toString() + (this.j-compteur).toString());
                 }
-                if(this.i-compteur >= 0 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j-compteur]);}
+                if(this.i-compteur >= 0 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i-compteur, this.j-compteur]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById((this.i+compteur).toString() + (this.j-compteur).toString());
@@ -181,7 +216,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i+compteur).toString() + (this.j-compteur).toString());
                 }
-                if(this.i+compteur <= 7 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j-compteur]);}
+                if(this.i+compteur <= 7 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i+compteur, this.j-compteur]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById((this.i-compteur).toString() + (this.j+compteur).toString());
@@ -191,7 +226,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i-compteur).toString() + (this.j+compteur).toString());
                 }
-                if(this.i-compteur >= 0 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j+compteur]);}
+                if(this.i-compteur >= 0 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i-compteur, this.j+compteur]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById((this.i+compteur).toString() + (this.j+compteur).toString());
@@ -201,27 +236,27 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i+compteur).toString() + (this.j+compteur).toString());
                 }
-                if(this.i+compteur <= 7 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j+compteur]);}
+                if(this.i+compteur <= 7 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i+compteur, this.j+compteur]);}
                 break;
 
                 
             case 5 :
                 currentMouv = document.getElementById((this.i-1).toString() + (this.j).toString());
-                if(this.i-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i-1, this.j]);}
+                if(this.i-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie))){this.nextMouv.push([this.i-1, this.j]);}
                 currentMouv = document.getElementById((this.i+1).toString() + (this.j   ).toString());
-                if(this.i+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i+1, this.j]);}
+                if(this.i+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie))){this.nextMouv.push([this.i+1, this.j]);}
                 currentMouv = document.getElementById((this.i).toString() + (this.j-1).toString());
-                if(this.j-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i, this.j-1]);}
+                if(this.j-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie))){this.nextMouv.push([this.i, this.j-1]);}
                 currentMouv = document.getElementById((this.i).toString() + (this.j+1).toString());
-                if(this.j+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i, this.j+1]);}
+                if(this.j+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie))){this.nextMouv.push([this.i, this.j+1]);}
                 currentMouv = document.getElementById((this.i-1).toString() + (this.j-1).toString());
-                if(this.i-1 >= 0 && this.j-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i-1, this.j-1]);}
+                if(this.i-1 >= 0 && this.j-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie))){this.nextMouv.push([this.i-1, this.j-1]);}
                 currentMouv = document.getElementById((this.i-1).toString() + (this.j+1).toString());
-                if(this.i-1 >= 0 && this.j+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i-1, this.j+1]);}
+                if(this.i-1 >= 0 && this.j+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie))){this.nextMouv.push([this.i-1, this.j+1]);}
                 currentMouv = document.getElementById((this.i+1).toString() + (this.j-1).toString());
-                if(this.i+1 <= 7 && this.j-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i+1, this.j-1]);}
+                if(this.i+1 <= 7 && this.j-1 >= 0 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie))){this.nextMouv.push([this.i+1, this.j-1]);}
                 currentMouv = document.getElementById((this.i+1).toString() + (this.j+1).toString());
-                if(this.i+1 <= 7 && this.j+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"))){this.nextMouv.push([this.i+1, this.j+1]);}
+                if(this.i+1 <= 7 && this.j+1 <= 7 && ((!currentMouv.hasChildNodes()) || (currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie))){this.nextMouv.push([this.i+1, this.j+1]);}
         
                 break;
 
@@ -233,7 +268,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i-compteur).toString() + this.j.toString());
                 }
-                if(this.i-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j]);}
+                if(this.i-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i-compteur, this.j]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById((this.i+compteur).toString() + this.j.toString());
@@ -243,7 +278,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i+compteur).toString() + this.j.toString());
                 }
-                if(this.i+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j]);}
+                if(this.i+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i+compteur, this.j]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById(this.i.toString() + (this.j-compteur).toString());
@@ -253,7 +288,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById(this.i.toString() + (this.j-compteur).toString());
                 }
-                if(this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i, this.j-compteur]);}
+                if(this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i, this.j-compteur]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById(this.i.toString() + (this.j+compteur).toString());
@@ -263,7 +298,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById(this.i.toString() + (this.j+compteur).toString());
                 }
-                if(this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i, this.j+   compteur]);}
+                if(this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i, this.j+   compteur]);}
           
                 compteur = 1;
                 currentMouv = document.getElementById((this.i-compteur).toString() + (this.j-compteur).toString());
@@ -273,7 +308,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i-compteur).toString() + (this.j-compteur).toString());
                 }
-                if(this.i-compteur >= 0 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j-compteur]);}
+                if(this.i-compteur >= 0 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i-compteur, this.j-compteur]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById((this.i+compteur).toString() + (this.j-compteur).toString());
@@ -283,7 +318,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i+compteur).toString() + (this.j-compteur).toString());
                 }
-                if(this.i+compteur <= 7 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j-compteur]);}
+                if(this.i+compteur <= 7 && this.j-compteur >= 0 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i+compteur, this.j-compteur]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById((this.i-compteur).toString() + (this.j+compteur).toString());
@@ -293,7 +328,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i-compteur).toString() + (this.j+compteur).toString());
                 }
-                if(this.i-compteur >= 0 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i-compteur, this.j+compteur]);}
+                if(this.i-compteur >= 0 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i-compteur, this.j+compteur]);}
 
                 compteur = 1;
                 currentMouv = document.getElementById((this.i+compteur).toString() + (this.j+compteur).toString());
@@ -303,7 +338,7 @@ export default class Pawn {
                     compteur += 1;
                     currentMouv = document.getElementById((this.i+compteur).toString() + (this.j+compteur).toString());
                 }
-                if(this.i+compteur <= 7 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == "b"){this.nextMouv.push([this.i+compteur, this.j+compteur]);}
+                if(this.i+compteur <= 7 && this.j+compteur <= 7 && currentMouv.hasChildNodes() && currentMouv.firstChild.id.substr(0, 1) == this.enemie){this.nextMouv.push([this.i+compteur, this.j+compteur]);}
                 break;
         }
 
