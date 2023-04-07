@@ -22,7 +22,7 @@ server.get('/chess', (req, res) => {
 });
 
 http.listen(port, ()=>{
-    console.log(`Server is running on http://localhost:${port}/`);
+    console.log(`Server is running on 192.168.20.183:${port}/`);
 })
 
 let users = [];

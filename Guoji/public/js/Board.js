@@ -136,11 +136,6 @@ export default class Board {
 
     setMovement(oldi,oldj, newi, newj)
     {
-        console.log(oldi);
-        console.log(oldj);
-        console.log(newi);
-        console.log(newj);
-
         this.plat[newj][newi] = this.plat[oldj][oldi];
         this.plat[oldj][oldi] = null;
     }
