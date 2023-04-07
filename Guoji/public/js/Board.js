@@ -112,6 +112,9 @@ export default class Board {
                 if(document.getElementById(newj.toString() + newi.toString()).classList.contains("lightingBox"))
                 {
                     if (element.hasChildNodes()) {
+                        if (element.firstChild.id == "white73" || element.firstChild.id == "black03") {
+                            this.end();
+                        }
                         element.removeChild(element.firstChild);
                     }
                     draggable.id =  this.getPawn(oldi,oldj).getcolor()+newj+newi;
@@ -148,5 +151,10 @@ export default class Board {
     getPawn(i,j)
     {
         return this.plat[j][i]
+    }
+
+    end()
+    {
+        console.log("C'est la fin !");
     }
 }

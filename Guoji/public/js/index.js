@@ -1,6 +1,6 @@
 import Board from './Board.js';
 
-const socket = io.connect("192.168.20.183:16800");
+const socket = io.connect("http://localhost:16800");
 socket.emit("joined");
 
 var board = new Board(8, socket);
