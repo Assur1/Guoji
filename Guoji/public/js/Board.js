@@ -45,7 +45,7 @@ export default class Board {
         }
     }
 
-    display(color){
+    display(){
         for(var i=0; i<this.lenght; i++){
             for(var j=0; j<this.lenght; j++){
                 if(this.plat[i][j] != null)

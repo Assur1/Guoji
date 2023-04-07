@@ -26,7 +26,6 @@ http.listen(port, ()=>{
 })
 
 let users = [];
-
 io.on('connection', (socket)=>{ 
     console.log(`[Connexion] ${socket.id}`)
     

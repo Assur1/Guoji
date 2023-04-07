@@ -21,8 +21,8 @@ socket.on("disconnected", ()=>{
 
 socket.on("start", ()=>{
     board.init();
-    board.display(currentPlayer.color);
-    board.DragAndDrop(socket);
+    board.display();
+    board.DragAndDrop();
 });
 
 socket.on("movment", (tab)=>{
@@ -33,7 +33,7 @@ socket.on("movment", (tab)=>{
     console.log("Display");
     board.display(currentPlayer.color);
     console.log("Drag and drop");
-    board.DragAndDrop(socket);
+    board.DragAndDrop();
 });
 
 
