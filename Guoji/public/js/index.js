@@ -1,6 +1,6 @@
 import Board from './Board.js';
 
-const socket = io.connect("192.168.20.183:16800");
+const socket = io.connect("http://localhost:16800");
 socket.emit("joined");
 
 var board = new Board(8, socket);
@@ -13,6 +13,8 @@ socket.emit("join", currentPlayer.id);
 
 socket.on("join", (color) =>{
     currentPlayer.color = color;
+    board.setColor(color);
+
 });
 
 socket.on("disconnected", ()=>{
@@ -23,6 +25,7 @@ socket.on("start", ()=>{
     board.init();
     board.display();
     board.DragAndDrop();
+    document.body.style.cursor = 'default';
 });
 
 socket.on("movment", (tab)=>{
@@ -33,7 +36,8 @@ socket.on("movment", (tab)=>{
     console.log("Display");
     board.display();
     console.log("DragAndDrop");
-    board.DragAndDrop();
+    board.DragAndDrop(currentPlayer);
+    document.body.style.cursor = 'default';
 });
 
 

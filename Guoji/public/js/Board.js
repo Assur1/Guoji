@@ -4,10 +4,17 @@ export default class Board {
     constructor(len, s) {
         this.socket = s;
         this.lenght = len;
+        this.color = -1;
         this.plat = new Array();
         for(var i=0; i<this.lenght; i++){
             this.plat[i] = new Array();
         }
+    }
+
+
+    setColor(c)
+    {
+        this.color = c;
     }
     init() {
         this.plat[0][0] = new Pawn(2,0,0, "black");
@@ -64,22 +71,37 @@ export default class Board {
         for( var i = 0; i< pawns.length; i++)
         {
             pawns[i].addEventListener('dragstart', (ev) => {
-                ev.dataTransfer.setData("text/plain", ev.target.id);
-                setTimeout(()=> {
-                    ev.target.classList.add("hide");
-                }, 0);
-
-                var i = parseInt(ev.target.id.at(-1));
-                var j = parseInt(ev.target.id.at(-2));
-                
-                var movs = this.getPawn(i,j).getmoveArray();
-                for(var i = 0; i<movs.length; i++)
+                var colorItem = ev.target.id.slice(0,5);
+                console.log(colorItem);
+                if(colorItem == "white")
                 {
-                    if((movs[i][0] <= 7) && (movs[i][0] >= 0) && (movs[i][1] <= 7) && (movs[i][1] >= 0))
+                    colorItem = 0;
+                }else
+                {
+                    colorItem = 1;
+                }
+                console.log(this.color);
+                console.log(colorItem);
+
+                if(this.color == colorItem)
+                {
+                    ev.dataTransfer.setData("text/plain", ev.target.id);
+                    setTimeout(()=> {
+                        ev.target.classList.add("hide");
+                    }, 0);
+
+                    var i = parseInt(ev.target.id.at(-1));
+                    var j = parseInt(ev.target.id.at(-2));
+                    
+                    var movs = this.getPawn(i,j).getmoveArray();
+                    for(var i = 0; i<movs.length; i++)
                     {
-                        document.getElementById(movs[i][0].toString() + movs[i][1].toString()).classList.add("lightingBox");
+                        if((movs[i][0] <= 7) && (movs[i][0] >= 0) && (movs[i][1] <= 7) && (movs[i][1] >= 0))
+                        {
+                            document.getElementById(movs[i][0].toString() + movs[i][1].toString()).classList.add("lightingBox");
+                        }
                     }
-                } 
+                }
             });
         }
 
@@ -95,47 +117,59 @@ export default class Board {
 
             boxes[i].addEventListener('drop', (ev) => {
                 const id =  ev.dataTransfer.getData('text/plain');
-                const draggable = document.getElementById(id);
 
-                
-
-                var oldi = parseInt(id.at(-1));
-                var oldj = parseInt(id.at(-2)); 
-
-                var movs = this.getPawn(oldi,oldj).getpreviousmovArray();
-
-                var newi = parseInt(ev.target.id.at(-1));
-                var newj = parseInt(ev.target.id.at(-2));
-
-                var element = document.getElementById(newj.toString() + newi.toString());
-
-                if(document.getElementById(newj.toString() + newi.toString()).classList.contains("lightingBox"))
+                var colorItem = id.slice(0,5);
+                console.log(colorItem);
+                if(colorItem == "white")
                 {
-                    if (element.hasChildNodes()) {
-                        if (element.firstChild.id == "white73" || element.firstChild.id == "black03") {
-                            this.end();
-                        }
-                        element.removeChild(element.firstChild);
-                    }
-                    draggable.id =  this.getPawn(oldi,oldj).getcolor()+newj+newi;
-                    this.getPawn(oldi,oldj).setIndices(newj, newi);
-
-                    
-
-                    this.setMovement(oldi,oldj, newi, newj)
-                    element.appendChild(draggable);
-                    pos = [[oldi, oldj], [newi, newj]];
-                    this.socket.emit("movment", pos);
+                    colorItem = 0;
+                }else
+                {
+                    colorItem = 1;
                 }
+                console.log(this.color);
+                console.log(colorItem);
 
-                for(var i = 0; i<movs.length; i++)
+                if(this.color == colorItem)
                 {
-                    if((movs[i][0] <= 7) && (movs[i][0] >= 0) && (movs[i][1] <= 7) && (movs[i][1] >= 0))
+                    const draggable = document.getElementById(id);
+                    var oldi = parseInt(id.at(-1));
+                    var oldj = parseInt(id.at(-2)); 
+
+                    var movs = this.getPawn(oldi,oldj).getpreviousmovArray();
+
+                    var newi = parseInt(ev.target.id.at(-1));
+                    var newj = parseInt(ev.target.id.at(-2));
+
+                    var element = document.getElementById(newj.toString() + newi.toString());
+
+                    if(document.getElementById(newj.toString() + newi.toString()).classList.contains("lightingBox"))
                     {
-                        document.getElementById(movs[i][0].toString() + movs[i][1].toString()).classList.remove("lightingBox");
-                    }                 
-                }               
-                draggable.classList.remove('hide');               
+                        if (element.hasChildNodes()) {
+                            if (element.firstChild.id == "white73" || element.firstChild.id == "black03") {
+                                this.end();
+                            }
+                            element.removeChild(element.firstChild);
+                        }
+                        draggable.id =  this.getPawn(oldi,oldj).getcolor()+newj+newi;
+                        this.getPawn(oldi,oldj).setIndices(newj, newi);
+
+                        this.setMovement(oldi,oldj, newi, newj)
+                        element.appendChild(draggable);
+                        pos = [[oldi, oldj], [newi, newj]];
+                        document.body.style.cursor = 'none';
+                        this.socket.emit("movment", pos);
+                    }
+
+                    for(var i = 0; i<movs.length; i++)
+                    {
+                        if((movs[i][0] <= 7) && (movs[i][0] >= 0) && (movs[i][1] <= 7) && (movs[i][1] >= 0))
+                        {
+                            document.getElementById(movs[i][0].toString() + movs[i][1].toString()).classList.remove("lightingBox");
+                        }                 
+                    }               
+                    draggable.classList.remove('hide');  
+                }             
             });
         }
     }
