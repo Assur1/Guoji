@@ -1,4 +1,4 @@
-/* Partie serveur */
+/* Partie communication serveur */
 
 import Board from './Board.js';
 
