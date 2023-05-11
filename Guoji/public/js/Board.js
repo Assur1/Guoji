@@ -16,6 +16,7 @@ export default class Board {
     {
         this.color = c;
     }
+    
     init() {
         this.plat[0][0] = new Pawn(2,0,0, "black");
         this.plat[0][1] = new Pawn(3,0,1, "black");
