@@ -188,6 +188,7 @@ export default class Board {
 
     end()
     {
-        console.log("C'est la fin !");
+        alert("Vous avez GAGNE OUEEEEEEEH !! ");
+        document.location.href="http://localhost:16800/";
     }
 }
