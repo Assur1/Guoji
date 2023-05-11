@@ -1,16 +1,17 @@
-/*
-1 : pion
-2 : rook
-3 : chevalier
-4 : bishop
-5 : king 
-6 : queen
+/* 
+Class Pawn : 
+Représente un Pion contenant une position, une couleur, un id et ces prochains mouvements possible
 */
 
 export default class Pawn {
 
     constructor(id, i, j, color) {
-        this.i = i;
+        // i, j : position dans le tableau 
+        // id : type de pion (1 : pion classique; 2 : tour; 3 : chevalier; 4 : fou; 5 : reine; 6 : roi)
+        // color : "b" ou "w" en fonction de la couleur du pion
+        // nextMouv Contient les possibilités de déplacements du pion
+
+        this.i = i; 
         this.j = j;
         this.id = id;
         this.color = color;
@@ -27,12 +28,14 @@ export default class Pawn {
     }
 
 
+    // Méthode setIndices : prend en entrée deux entiers correspondant à la nouvelle position du pion et met à jour la position.
     setIndices(i, j)
     {
         this.i = i;
         this.j = j;
     }
 
+    // Méthode d'affichage du pion
     display(i, j) {
         if(this.color == "white")
         {
@@ -78,11 +81,13 @@ export default class Pawn {
         
     }
 
+    // Méthode retournant dans nextMouv les possibilités de déplacement du pion choisi.
     getmoveArray()
     {
         this.nextMouv = new Array();
         var currentMouv, compteur=1;
 
+        // switch sur l'id du pion donc sur son type
         switch(this.id)
         {
             case 1 :
@@ -345,11 +350,13 @@ export default class Pawn {
         return this.nextMouv;
     }
 
+    // Méthode : retourne nextMouv
     getpreviousmovArray()
     {
         return this.nextMouv;
     }
 
+    // Méthode : retourne color
     getcolor()
     {
         return this.color;

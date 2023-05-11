@@ -1,3 +1,8 @@
+/* 
+Class Board : 
+Représente le tableau de jeu
+*/
+
 import Pawn from './Pawn.js';
 export default class Board {
 
@@ -16,7 +21,8 @@ export default class Board {
     {
         this.color = c;
     }
-    
+
+    // Initialisation du jeu avec les pions et leurs positions.
     init() {
         this.plat[0][0] = new Pawn(2,0,0, "black");
         this.plat[0][1] = new Pawn(3,0,1, "black");
@@ -53,6 +59,7 @@ export default class Board {
         }
     }
 
+    // Affichage du plateau de jeu
     display(){
         for(var i=0; i<this.lenght; i++){
             for(var j=0; j<this.lenght; j++){
@@ -64,6 +71,7 @@ export default class Board {
         }      
     }
 
+    // Méthode correspondant au tour par tour du jeu. Chaque tour, un joueur peut déplacer ses pions. 
     DragAndDrop()
     {
         var pawns = document.getElementsByClassName("pawn");
@@ -91,10 +99,14 @@ export default class Board {
                         ev.target.classList.add("hide");
                     }, 0);
 
+                    // Retourne dans i et j la position du pion sélectionné. 
                     var i = parseInt(ev.target.id.at(-1));
                     var j = parseInt(ev.target.id.at(-2));
                     
+                    // Retourne dans movs les cases où le pion sélectionné peut se déplacer 
                     var movs = this.getPawn(i,j).getmoveArray();
+
+                    // Ajoute l'attribut lightingBox au case où le pion sélectionné peut se déplacer
                     for(var i = 0; i<movs.length; i++)
                     {
                         if((movs[i][0] <= 7) && (movs[i][0] >= 0) && (movs[i][1] <= 7) && (movs[i][1] >= 0))
@@ -144,14 +156,19 @@ export default class Board {
 
                     var element = document.getElementById(newj.toString() + newi.toString());
 
+                    // Déplacement d'un pion dans une case illuminé
                     if(document.getElementById(newj.toString() + newi.toString()).classList.contains("lightingBox"))
                     {
+                        // Si cette case contient un autre pion 
                         if (element.hasChildNodes()) {
+                            // Si cette case contient le roi alors la partie prend fin 
                             if (element.firstChild.id == "white73" || element.firstChild.id == "black03") {
                                 this.end();
                             }
+                            // Supprime le pion
                             element.removeChild(element.firstChild);
                         }
+                        // Positionne dans cette case le pion courrant 
                         draggable.id =  this.getPawn(oldi,oldj).getcolor()+newj+newi;
                         this.getPawn(oldi,oldj).setIndices(newj, newi);
 
@@ -162,6 +179,7 @@ export default class Board {
                         this.socket.emit("movment", pos);
                     }
 
+                    // On enlève les cases illuminés
                     for(var i = 0; i<movs.length; i++)
                     {
                         if((movs[i][0] <= 7) && (movs[i][0] >= 0) && (movs[i][1] <= 7) && (movs[i][1] >= 0))
@@ -175,7 +193,6 @@ export default class Board {
         }
     }
 
-
     setMovement(oldi,oldj, newi, newj)
     {
         this.plat[newj][newi] = this.plat[oldj][oldi];
@@ -187,6 +204,7 @@ export default class Board {
         return this.plat[j][i]
     }
 
+    // Méthode affichant un message de victoire et une redirection vers la page principale.
     end()
     {
         alert("Vous avez GAGNE OUEEEEEEEH !! ");

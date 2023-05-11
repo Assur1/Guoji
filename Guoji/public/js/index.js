@@ -1,3 +1,5 @@
+/* Partie serveur */
+
 import Board from './Board.js';
 
 const socket = io.connect("http://localhost:16800");
